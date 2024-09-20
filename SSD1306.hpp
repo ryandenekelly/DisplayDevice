@@ -1,3 +1,4 @@
+/* Based on ssd1306 library from https://github.com/Matiasus/SSD1306 */
 #pragma once
 #include "DisplayDevice.hpp"
 #include "i2c.h"
