@@ -1,2 +1,2 @@
 # DisplayDevice
-For STM32F4 devices. WIP.
+C++ library for iterfacing with display devices for STM32F4. WIP.
