@@ -115,6 +115,7 @@ class ST7735 : public DisplayDevice
 	void drawImage(std::uint16_t x, std::uint16_t y, std::uint16_t w, std::uint16_t h, const std::uint16_t* data);
 	void invertColors(bool invert);
 	void setGamma(std::uint8_t gamma);
+	void displayPrintf(const char* format, ...);
 
     private:
 	SPI_HandleTypeDef* m_spiHandler;
@@ -129,6 +130,7 @@ class ST7735 : public DisplayDevice
 	std::uint8_t m_currentX;
 	std::uint8_t m_currentY;
 	FontClass* m_font;
+
 
 	/* Base */
 	void writeCommand(std::uint8_t cmd);

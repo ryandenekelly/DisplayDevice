@@ -1,4 +1,6 @@
 #include "SSD1306.hpp"
+#include "printf.h"
+#include <cstring>
 
 /** @brief SSD1306 default constructor */
 SSD1306::SSD1306() : m_height(0), m_width(0)
@@ -222,16 +224,26 @@ void SSD1306::writeChar(char ch, std::uint16_t colour, std::uint16_t bgcolour)
     // check for control chars
     if(ch == '\n')
     {
-	// move cursor to next line.
-	m_currentX = 0;
-	m_currentY += m_font->height;
-	return;
+		// move cursor to next line.
+		m_currentX = 0;
+		m_currentY += m_font->height;
+		return;
     }
     // check bounds.
-    if(m_width < (m_currentX + m_font->width) || m_height < (m_currentY + m_font->height))
+    if(m_width < (m_currentX + m_font->width))
     {
-	return;
+		// move cursor to next line.
+		m_currentX = 0;
+		m_currentY += m_font->height;
     }
+    else if(m_height < (m_currentY + m_font->height))
+    {
+
+    	memmove(m_buffer+m_width-1, m_buffer, 1023-m_width-1);
+    	memset(m_buffer, 0, m_width-1);
+    	m_currentY -= m_font->height;
+    }
+
     // get index of character into stored font array.
     // NB: using latin basic unicode set *FROM* the space char to DEL(replaced with '°').
     std::uint16_t fontIndex = m_font->getCharIndex(ch);
@@ -303,7 +315,7 @@ void SSD1306::writeString(std::string str, std::uint16_t colour, std::uint16_t b
     // iterate though the string and write the chars.
     for(auto c : str)
     {
-	writeChar(c, colour, bgcolour);
+    	writeChar(c, colour, bgcolour);
     }
 }
 
@@ -571,4 +583,12 @@ std::uint16_t SSD1306::getColour(std::string colour)
     {
 	return -1;
     }
+}
+
+void SSD1306::displayPrintf(const char* format, ...)
+{
+	std::string printBuffer;
+	sprintf((char*)printBuffer.data(), format);
+	writeString(printBuffer.data(), DisplayDevice::White, DisplayDevice::Black);
+	refreshScreen();
 }

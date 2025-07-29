@@ -228,7 +228,7 @@ void ST7735::writeString(std::string str, std::uint16_t colour, std::uint16_t bg
     // iterate though the string and write the chars.
     for(auto c : str)
     {
-	writeChar(c, colour, bgcolour);
+    	writeChar(c, colour, bgcolour);
     }
     unselect();
 }
@@ -498,4 +498,11 @@ std::uint16_t ST7735::getColour(std::string colour)
 void ST7735::refreshScreen()
 {
 
+}
+
+void ST7735::displayPrintf(const char* format, ...)
+{
+	std::string printBuffer;
+	sprintf((char*)printBuffer.data(), format);
+	writeString(printBuffer, 0x00, 0x01);
 }

@@ -51,6 +51,8 @@ class DisplayDevice
 	virtual std::uint16_t getColour(std::string colour) = 0;
 	virtual void refreshScreen() = 0;
 
+	virtual void displayPrintf(const char* format, ...) = 0;
+
     private:
 	const std::uint8_t m_width;
 	const std::uint8_t m_height;

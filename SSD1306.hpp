@@ -129,6 +129,9 @@ class SSD1306 : public DisplayDevice
 	void setContrast(std::uint8_t value);
 	void setDisplayOn(bool onOff);
 	void getDisplayOn();
+	void displayPrintf(const char* format, ...);
+
+
 
     private:
 	std::uint8_t m_i2cAddress;
