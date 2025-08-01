@@ -587,7 +587,7 @@ std::uint16_t SSD1306::getColour(std::string colour)
 
 void SSD1306::displayPrintf(const char* format, ...)
 {
-	std::string printBuffer;
+	std::string printBuffer = "";
 	sprintf((char*)printBuffer.data(), format);
 	writeString(printBuffer.data(), DisplayDevice::White, DisplayDevice::Black);
 	refreshScreen();
